@@ -1,5 +1,9 @@
  node {
     def app
+	 
+    stage('Clone repository') {
+        checkout scm
+    }
 
     stage('Deploy image') { 
 	    sh "kubectl get pods "
