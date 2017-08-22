@@ -7,7 +7,7 @@
 
     stage('Build image') {
 
-        sh "docker-compose up"
+        sh "sudo docker-compose up"
     }
       stage('Push image') {
        
