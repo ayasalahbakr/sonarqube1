@@ -1,22 +1,31 @@
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: sonar-service
-  labels:
-    run: sonar-service
+  name: sonar
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
+      name: sonar
       labels:
-        run: sonar-service
+        app: sonar
     spec:
       containers:
-      - name: sonarqube
-        image: sonarqube
-    ports:
-        - containerPort: 2222
-          protocol: TCP
-      - name: db
-        image: postgres
-        - containerPort: 27017
-          protocol: TCP
+        - image: sonarqube:6.0
+          args:
+            - -Dsonar.web.context=/
+          name: sonar
+          env:
+            - name: SONARQUBE_JDBC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-info
+                  key: password
+            - name: SONARQUBE_JDBC_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-info
+                  key: url 
+          ports:
+            - containerPort: 9000
+              name: sonar
