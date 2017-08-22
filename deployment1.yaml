@@ -15,8 +15,8 @@ spec:
         image: sonarqube
     ports:
         - containerPort: 2222
-          protocol:TCP
+          protocol: TCP
       - name: db
         image: postgres
-        - containerPort:27017
-          protocol:TCP
+        - containerPort: 27017
+          protocol: TCP
